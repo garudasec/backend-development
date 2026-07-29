@@ -52,11 +52,29 @@ const userSchema = new Schema(
 )
 
 
+/*
+NOTE:
+Chai Aur Code playlist me Mongoose middleware aise tha:
+
 userSchema.pre("save", async function(next) {
     if (!this.isModified("password")) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+})
+
+In the Chai Aur Code playlist, the async pre hook uses `next()`.
+That code worked with the Mongoose version used in the tutorial.
+
+In Mongoose v8+, async middleware is Promise-based, so `next()`
+is not required. Using `async function(next)` may throw:
+"TypeError: next is not a function".
+
+*/
+userSchema.pre("save", async function() {
+    if (!this.isModified("password")) return ;
 
     this.password = await bcrypt.hash(this.password, 10)
-    next()
+    
 }) 
 
 userSchema.methods.isPasswordCorrect = async function (password) {
