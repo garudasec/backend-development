@@ -4,7 +4,6 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-
 // this use method is used for middleware or configurations
 app.use(
   cors({
@@ -12,7 +11,6 @@ app.use(
     credentials: true,
   })
 );
-
 
 // data will come from different place like url, json, body, direct form, so we have set limit
 app.use(
@@ -28,21 +26,12 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 
 // to access and set the client's cookie
-app.use(cookieParser())
-
-
-
+app.use(cookieParser());
 
 // routes import
-import userRouter from "./routes/user.route.js"
-
+import userRouter from "./routes/user.route.js";
 
 // routes declaration
-app.use("/api/v1/users", userRouter )
-
-
-
-
-
+app.use("/api/v1/users", userRouter);
 
 export { app };
